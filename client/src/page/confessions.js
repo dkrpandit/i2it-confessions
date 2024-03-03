@@ -1,7 +1,28 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
-
+import { Filter } from 'lucide-react';
 import PostFrom from './post';
+
+
+const FilterDropdown = ({ onSelect }) => {
+    const options = ['Latest', 'Oldest', '1st Year', '2nd Year', '3rd Year', '4th Year'];
+
+    return (
+        <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-md">
+            <ul>
+                {options.map((option, index) => (
+                    <li
+                        key={index}
+                        onClick={() => onSelect(option)}
+                        className="cursor-pointer py-2 px-4 hover:bg-gray-200"
+                    >
+                        {option}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+};
 
 export default function Confessions() {
     const confessionsPage = [
@@ -71,6 +92,8 @@ export default function Confessions() {
     ];
 
     const [open, setOpen] = React.useState(false);
+    const [selectedFilter, setSelectedFilter] = useState('');
+
 
     const handleClose = () => {
         setOpen(false);
@@ -79,7 +102,11 @@ export default function Confessions() {
     const handleOpen = () => {
         setOpen(true);
     };
-
+    const handleFilterSelect = (option) => {
+        setSelectedFilter(option);
+        setOpen(false);
+        // Implement your filter logic here
+    };
     const [showPage, setShowPage] = useState(false)
     return (
         <>
@@ -98,6 +125,16 @@ export default function Confessions() {
 
                     <button type='button' onClick={() => setShowPage(true)} className='bg-white border border-gray-300 p-3 rounded-md shadow-md hover:shadow-lg focus:outline-none focus:ring focus:border-blue-300 transition duration-300' >Post your confession</button>
                     {showPage && <PostFrom onClose={() => setShowPage(false)} />}
+                </div>
+
+                <div className="flex items-center justify-between">
+                    <div className="box-content">{selectedFilter}</div>
+                    <div className="ml-auto cursor-pointer" onClick={handleOpen}>
+                        <Filter strokeWidth={1.75} />
+                    </div>
+
+                    {/* Filter dropdown */}
+                    {open && <FilterDropdown onSelect={handleFilterSelect} />}
                 </div>
 
                 {
