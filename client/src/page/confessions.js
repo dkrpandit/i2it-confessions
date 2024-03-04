@@ -123,7 +123,18 @@ export default function Confessions() {
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 max-w-60 "
                     />
 
-                    <button type='button' onClick={() => setShowPage(true)} className='bg-white border border-gray-300 p-3 rounded-md shadow-md hover:shadow-lg focus:outline-none focus:ring focus:border-blue-300 transition duration-300' >Post your confession</button>
+                    <button type='button' onClick={() => setShowPage(true)} style={
+                        {
+                            backgroundColor: "transparent",
+                            color: "gray",
+                            padding: "10px 20px",
+                            cursor: "pointer",
+                            borderRadius: "19px",
+                            boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
+                            border: "2px solid #282626",
+                            outline: "none"
+                        }
+                    } >Post your confession</button>
                     {showPage && <PostFrom onClose={() => setShowPage(false)} />}
                 </div>
 
@@ -147,7 +158,7 @@ export default function Confessions() {
                         </div>
                     ))
                 }
-            </div>
+            </div >
         </>
     );
 }

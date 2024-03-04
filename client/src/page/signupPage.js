@@ -1,60 +1,58 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { toast } from 'react-toastify';
 import i2itLogo from "../img/i2itLogo.png"
 
 export default function Signup() {
 
   const navigate = useNavigate();
-
   const [userData, setUserData] = useState({
     name: "",
     email: "",
-    password: ""
-  })
-  let name, value;
+    password: "",
+    confirmPassword: ""
+  });
   const handleInput = (e) => {
+    let name = e.target.name;
+    let value = e.target.value;
+    // console.log(e);
+    setUserData({ ...userData, [name]: value });
+  };
 
-    // console.log(e)
 
-    name = e.target.name;
-    value = e.target.value;
-    setUserData({ ...userData, [name]: value })
-  }
-
-  const formData = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, email, password } = userData;
-    const confirmPassword = userData['confirmPassword'];
-
+    const { name, email, password, confirmPassword } = userData;
     if (password !== confirmPassword) {
-      window.alert("Passwords do not match");
+      toast.error("Passwords do not match");
       return;
     }
-
-    const res = await fetch("/register", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json"
-      },
-      body: JSON.stringify({
-        name, email, password
-      })
-    });
-    const data = await res.json();
-
-    if (data.status === 422 || !data) {
-      window.alert("Invalid Registration")
-      console.log("invalid Registration")
+    // console.log("name: " + name + " email: " + email + " password: " + password);
+    try {
+      const response = await fetch("/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({name,email,password})
+      });
+    } catch (error) {
+      console.log("registration error", error);
     }
-    else {
-      window.alert("Registration successfully")
-
-      navigate("/login")
-    }
-
-
   }
+
+  const [isValidEmail, setIsValidEmail] = useState(false);
+  const [isOtpVerify, setIsOtpVerify] = useState(true);
+  const handleVerifyEmailButton = () => {
+    let inputEmail = userData.email;
+
+    if (inputEmail === "" || !inputEmail.endsWith("@students.isquareit.edu.in")) {
+      toast.error("Please use collage email id");
+    } else {
+      setIsValidEmail(true);
+      toast.success("check your email and enter OTP");
+    }
+  };
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -70,7 +68,7 @@ export default function Signup() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" method="POST">
+          <form className="space-y-6" method="POST" onSubmit={handleSubmit}>
             <div >
               <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900 flex items-center justify-between">
                 Full Name
@@ -101,10 +99,34 @@ export default function Signup() {
                   required
                   value={userData.email}
                   onChange={handleInput}
+                  disabled={isValidEmail && isOtpVerify}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+
               </div>
+              <button style={{
+                marginLeft: "73%",
+                color: "green"
+              }} onClick={handleVerifyEmailButton} >Verify Email</button>
             </div>
+            {isValidEmail ? (<><input type="number" name="otp" id="otp" placeholder='Enter OTP' autoComplete='off' style={{
+              width: "116px",
+              position: "absolute",
+              marginTop: "-15px",
+              borderRadius: "13px",
+              outline: "none"
+            }} />
+              <button style={{
+                position: 'absolute',
+                marginTop: '-11px',
+                marginLeft: '122px',
+                border: '2px solid gray',
+                backgroundColor: '#a4a8ae',
+                padding: '3px',
+                borderRadius: '11px',
+                outline: 'none',
+                WebkitTextStrokeWidth: 'thin'
+              }}>Submit</button></>) : null}
 
             <div>
               <div className="flex items-center justify-between">
@@ -148,8 +170,8 @@ export default function Signup() {
             <div>
               <button
                 type="submit"
-                onClick={formData}
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                disabled={!isValidEmail || !isOtpVerify}
               >
                 Sign in
               </button>
@@ -158,12 +180,12 @@ export default function Signup() {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Already have account ?{' '}
-            <Link to="/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            <Link to="/" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
               Login
             </Link>
           </p>
         </div>
-      </div>
+      </div >
     </>
   );
 }
