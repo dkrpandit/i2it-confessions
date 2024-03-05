@@ -19,31 +19,44 @@ export default function Signup() {
     setUserData({ ...userData, [name]: value });
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, email, password, confirmPassword } = userData;
+
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
     }
-    // console.log("name: " + name + " email: " + email + " password: " + password);
+
+    if (!password) {
+      toast.error("Please enter a password");
+      return;
+    }
+
     try {
       const response = await fetch("/register", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({name,email,password})
+        body: JSON.stringify({ name, email, password, isOtpVerify }),
       });
+
+      if (response.ok) {
+        toast.success("Successfully registered ");
+        navigate("/confessions");
+      }
     } catch (error) {
       console.log("registration error", error);
     }
-  }
+  };
+
 
   const [isValidEmail, setIsValidEmail] = useState(false);
-  const [isOtpVerify, setIsOtpVerify] = useState(true);
-  const handleVerifyEmailButton = () => {
+  const [isOtpVerify, setIsOtpVerify] = useState(false);
+  const [serverOtp, setServerOtp] = useState("");
+
+  const handleVerifyEmailButton = async () => {
     let inputEmail = userData.email;
 
     if (inputEmail === "" || !inputEmail.endsWith("@students.isquareit.edu.in")) {
@@ -51,8 +64,35 @@ export default function Signup() {
     } else {
       setIsValidEmail(true);
       toast.success("check your email and enter OTP");
+      const { email } = userData;
+      try {
+        const response = await fetch("/send-otp", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email })
+        });
+        const res_data = await response.json();
+        console.log(res_data);
+        const sOTP = await res_data.otp;
+        setServerOtp(sOTP);
+      } catch (error) {
+        toast.error("Please try again")
+      }
     }
   };
+
+  const [OtpInput, setOtpInput] = useState("");
+  const verifyOtp = () => {
+    // console.log(OtpInput);
+    if (OtpInput === serverOtp) {
+      setIsOtpVerify(true);
+      toast.success("OTP verified");
+    } else {
+      toast.error("Invalid OTP");
+    }
+  }
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -68,7 +108,7 @@ export default function Signup() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" method="POST" onSubmit={handleSubmit}>
+          <form className="space-y-6" method="POST" >
             <div >
               <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900 flex items-center justify-between">
                 Full Name
@@ -104,18 +144,40 @@ export default function Signup() {
                 />
 
               </div>
-              <button style={{
-                marginLeft: "73%",
-                color: "green"
-              }} onClick={handleVerifyEmailButton} >Verify Email</button>
+              <button
+                style={{
+                  marginLeft: "73%",
+                  color: "green",
+                  marginTop: "0.5rem", // Add a small margin to align with other elements
+                  padding: "0.25rem 0.5rem", // Adjust padding for consistency
+                  borderRadius: "0.25rem", // Add border-radius for consistency
+                }}
+                onClick={handleVerifyEmailButton}
+              >
+                Verify Email
+              </button>
+
             </div>
-            {isValidEmail ? (<><input type="number" name="otp" id="otp" placeholder='Enter OTP' autoComplete='off' style={{
-              width: "116px",
-              position: "absolute",
-              marginTop: "-15px",
-              borderRadius: "13px",
-              outline: "none"
-            }} />
+            {isValidEmail ? (<>
+              <input
+                type="text"
+                name="otp"
+                id="otp"
+                placeholder="Enter OTP"
+                autoComplete="off"
+                style={{
+                  width: "116px",
+                  position: "absolute",
+                  marginTop: "-15px",
+                  borderRadius: "13px",
+                  outline: "none"
+                }}
+                value={OtpInput}
+                onChange={(e) => {
+                  setOtpInput(e.target.value);
+                }}
+              />
+
               <button style={{
                 position: 'absolute',
                 marginTop: '-11px',
@@ -126,7 +188,8 @@ export default function Signup() {
                 borderRadius: '11px',
                 outline: 'none',
                 WebkitTextStrokeWidth: 'thin'
-              }}>Submit</button></>) : null}
+              }
+              } onClick={verifyOtp} >Submit</button></>) : null}
 
             <div>
               <div className="flex items-center justify-between">
@@ -172,6 +235,7 @@ export default function Signup() {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 disabled={!isValidEmail || !isOtpVerify}
+                onClick={handleSubmit}
               >
                 Sign in
               </button>

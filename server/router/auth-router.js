@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 // const  {home,login} = require("../controllers/auth-controller");
-const register = require("../controllers/auth-controller");
+const controller = require("../controllers/auth-controller");
 
 // router.get("/", (req, res) => {
 //     res.status(200).send("root page router side")
@@ -13,6 +13,8 @@ const register = require("../controllers/auth-controller");
 // })
 
 
-router.route("/register").post(register);
+router.route("/register").post(controller.register);
+router.route("/verify-otp").post(controller.verifyOtp);
+router.route("/send-otp").post(controller.sendOtp);
 
 module.exports = router;
