@@ -23,7 +23,7 @@ const PostForm = ({ onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add logic to handle form submission (e.g., sending data to the server)
-    console.log(formData.name);
+    console.log(formData);
     // Close the form
     onClose();
   };

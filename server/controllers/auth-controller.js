@@ -1,4 +1,5 @@
 const user = require("../models/user-model");
+const confession = require("../models/confession-model");
 const nodemailer = require('nodemailer');
 
 const register = async (req, res) => {
@@ -26,6 +27,28 @@ const register = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
+const confessionMessage = async (req, res) => {
+    try {
+        const data = req.body;
+        console.log(data);
+        const confessionMessage = await confession.create({
+            name: data.name,
+            branch: data.branch,
+            year: data.year,
+            message: data.confession
+        });
+
+        res.status(201).json({
+            msg: "Successfully posted your confession",
+            confession: confessionMessage  // Optionally include the created confession in the response
+        });
+    } catch (error) {
+        console.log("Error during registration:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
 
 const verifyOtp = async (req, res) => {
     try {
@@ -70,7 +93,7 @@ const sendOtp = async (req, res) => {
 
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
-                res.status(500).json({message:"Error sending mail"});
+                res.status(500).json({ message: "Error sending mail" });
             } else {
                 res.status(201).json({
                     otp: otp1,
@@ -83,4 +106,4 @@ const sendOtp = async (req, res) => {
         res.status(500).json({ message: "Error in sending otp:" });
     }
 }
-module.exports = { register, verifyOtp, sendOtp };
+module.exports = { register, verifyOtp, sendOtp, confessionMessage };

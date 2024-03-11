@@ -17,4 +17,8 @@ router.route("/register").post(controller.register);
 router.route("/verify-otp").post(controller.verifyOtp);
 router.route("/send-otp").post(controller.sendOtp);
 
+router.route("/confession-message").post(controller.confessionMessage);
+
+
+
 module.exports = router;
