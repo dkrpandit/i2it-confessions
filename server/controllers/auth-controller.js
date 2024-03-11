@@ -31,41 +31,6 @@ const verifyOtp = async (req, res) => {
     try {
         const data = req.body;
         console.log(data);
-        // const generateOTP = () => {
-        //     const digits = '0123456789';
-        //     let otp = '';
-
-        //     for (let i = 0; i < 6; i++) {
-        //         const randomIndex = Math.floor(Math.random() * digits.length);
-        //         otp += digits.charAt(randomIndex);
-        //     }
-
-        //     return otp;
-        // }
-        // const otp1 = generateOTP();
-        // let transporter = nodemailer.createTransport({
-        //     service: 'gmail',
-        //     auth: {
-        //         user: 'dharmendra763297@gmail.com',
-        //         pass: 'yrothzlkanaffqhf'
-        //     }
-        // });
-
-        // let mailOptions = {
-        //     from: 'dharmendra763297@gmail.com',
-        //     to: data.email,
-        //     subject: 'Admin Panel',
-        //     text: `Your OTP is: ${otp1}`
-        // };
-
-        // transporter.sendMail(mailOptions, function (error, info) {
-        //     if (error) {
-        //         console.log(error);
-        //     } else {
-        //         console.log("Mail sent successfully")
-        //         console.log('Email sent: ' + info.response);
-        //     }
-        // });
         res.status(201).json({ message: data });
     } catch (error) {
         res.status(500).json({ message: "errors in verify otp" });
@@ -75,7 +40,7 @@ const verifyOtp = async (req, res) => {
 const sendOtp = async (req, res) => {
     try {
         const data = req.body;
-        console.log(data);
+        // console.log(data);
         const generateOTP = () => {
             const digits = '0123456789';
             let otp = '';
@@ -92,7 +57,7 @@ const sendOtp = async (req, res) => {
             service: 'gmail',
             auth: {
                 user: 'dharmendra763297@gmail.com',
-                pass: 'xmhnaaodrnlnrcym'
+                pass: 'jsbxgzmoufgszzok'
             }
         });
 
@@ -105,9 +70,12 @@ const sendOtp = async (req, res) => {
 
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
-                console.log(error);
+                res.status(500).json({message:"Error sending mail"});
             } else {
-                res.status(201).json({ otp: otp1 })
+                res.status(201).json({
+                    otp: otp1,
+                    message: "OTP sent successfully",
+                })
             }
         });
     } catch (error) {
