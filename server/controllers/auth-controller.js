@@ -40,8 +40,8 @@ const confessionMessage = async (req, res) => {
         });
 
         res.status(201).json({
-            msg: "Successfully posted your confession",
-            confession: confessionMessage  // Optionally include the created confession in the response
+            message: "Successfully posted your confession",
+            // confession: confessionMessage  // Optionally include the created confession in the response
         });
     } catch (error) {
         console.log("Error during registration:", error);

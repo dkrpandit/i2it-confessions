@@ -95,10 +95,6 @@ export default function Confessions() {
     const [selectedFilter, setSelectedFilter] = useState('');
 
 
-    const handleClose = () => {
-        setOpen(false);
-    };
-
     const handleOpen = () => {
         setOpen(true);
     };
@@ -108,57 +104,56 @@ export default function Confessions() {
         // Implement your filter logic here
     };
     const [showPage, setShowPage] = useState(false)
-    return (
-        <>
-            <Navbar />
-            <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-                <div className='inputField'>
-                    <input
-                        id="name"
-                        name="name"
-                        type="text"
-                        placeholder='Search confession by name'
-                        autoComplete="email"
-                        required
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 max-w-60 "
-                    />
+    return (<>
+        <Navbar />
+        <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div className='inputField'>
+                <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    placeholder='Search confession by name'
+                    autoComplete="email"
+                    required
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 max-w-60 "
+                />
 
-                    <button type='button' onClick={() => setShowPage(true)} style={
-                        {
-                            backgroundColor: "transparent",
-                            color: "gray",
-                            padding: "10px 20px",
-                            cursor: "pointer",
-                            borderRadius: "19px",
-                            boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
-                            border: "2px solid #282626",
-                            outline: "none"
-                        }
-                    } >Post your confession</button>
-                    {showPage && <PostFrom onClose={() => setShowPage(false)} />}
+                <button type='button' onClick={() => setShowPage(true)} style={
+                    {
+                        backgroundColor: "transparent",
+                        color: "gray",
+                        padding: "10px 20px",
+                        cursor: "pointer",
+                        borderRadius: "19px",
+                        boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
+                        border: "2px solid #282626",
+                        outline: "none"
+                    }
+                } >Post your confession</button>
+                {showPage && <PostFrom onClose={() => setShowPage(false)} />}
+            </div>
+
+            <div className="flex items-center justify-between">
+                <div className="box-content">{selectedFilter}</div>
+                <div className="ml-auto cursor-pointer" onClick={handleOpen}>
+                    <Filter strokeWidth={1.75} />
                 </div>
 
-                <div className="flex items-center justify-between">
-                    <div className="box-content">{selectedFilter}</div>
-                    <div className="ml-auto cursor-pointer" onClick={handleOpen}>
-                        <Filter strokeWidth={1.75} />
+                {/* Filter dropdown */}
+                {open && <FilterDropdown onSelect={handleFilterSelect} />}
+            </div>
+
+            {
+                confessionsPage.map(confession => (
+                    <div className='card' key={confession.id}>
+                        <h3>{`Name: ${confession.name}`}</h3>
+                        <h4>{`Branch: ${confession.branch}`}</h4>
+                        <h4>{`Year: ${confession.year}`}</h4>
+                        <p>{`Message: ${confession.message}`}</p>
                     </div>
-
-                    {/* Filter dropdown */}
-                    {open && <FilterDropdown onSelect={handleFilterSelect} />}
-                </div>
-
-                {
-                    confessionsPage.map(confession => (
-                        <div className='card' key={confession.id}>
-                            <h3>{`Name: ${confession.name}`}</h3>
-                            <h4>{`Branch: ${confession.branch}`}</h4>
-                            <h4>{`Year: ${confession.year}`}</h4>
-                            <p>{`Message: ${confession.message}`}</p>
-                        </div>
-                    ))
-                }
-            </div >
-        </>
+                ))
+            }
+        </div >
+    </>
     );
 }

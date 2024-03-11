@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { X } from 'lucide-react';
-
+import { toast } from 'react-toastify';
 const branches = ['IT', 'CS', 'E&TC'];
 const years = ['First', 'Second', 'Third', 'Fourth'];
 
@@ -20,10 +20,30 @@ const PostForm = ({ onClose }) => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add logic to handle form submission (e.g., sending data to the server)
     console.log(formData);
+
+    e.preventDefault();
+    const { name, branch, year, confession } = formData;
+
+    try {
+      const response = await fetch("/confession-Message", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, branch, year, confession }),
+      });
+      const res_data = await response.json();
+      // console.log(res_data);
+      if (response.ok) {
+        toast.success(res_data.message);
+      }
+    } catch (error) {
+      console.log("registration error", error);
+    }
+
     // Close the form
     onClose();
   };
