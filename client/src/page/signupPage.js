@@ -190,7 +190,8 @@ export default function Signup() {
                 outline: 'none',
                 WebkitTextStrokeWidth: 'thin'
               }
-              } onClick={verifyOtp} >Submit</button></>) : null}
+              } onClick={verifyOtp}
+                disabled={isOtpVerify} >Submit</button></>) : null}
 
             <div>
               <div className="flex items-center justify-between">

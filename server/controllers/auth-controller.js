@@ -49,6 +49,18 @@ const confessionMessage = async (req, res) => {
     }
 };
 
+const getConfessions = async (req, res) => {
+    try {
+        const response = await confession.find();
+        console.log(response);
+        if (!response) {
+            return res.status(404).json({ message: "errors to load confessions" })
+        }
+        return res.status(200).json( response )
+    } catch (error) {
+        console.log(`errors ${error}`);
+    }
+}
 
 const verifyOtp = async (req, res) => {
     try {
@@ -106,4 +118,31 @@ const sendOtp = async (req, res) => {
         res.status(500).json({ message: "Error in sending otp:" });
     }
 }
-module.exports = { register, verifyOtp, sendOtp, confessionMessage };
+
+const login = async (req, res) => {
+    try {
+        const data = req.body;
+        const userExist = await user.findOne({ email: data.email });
+        // console.log(!userExist);
+
+        if (!userExist) {
+            return res.status(400).json({ message: "invalid credential" });
+        }
+        // const isPasswordValid = await bcrypt.compare(data.password, userExist.password);
+        const isPasswordValid = await userExist.comparePassword(data.password);
+
+        if (isPasswordValid) {
+            res.status(200).json({
+                message: "login successful",
+                token: await userExist.generateToken(),
+                userID: userExist._id.toString()
+            });
+        } else {
+            res.status(400).json({ message: "invalid credential" })
+        }
+    } catch (error) {
+        res.status(400).json({ message: "page not found" });
+        // next(error);
+    }
+}
+module.exports = { register, verifyOtp, sendOtp, confessionMessage,login ,getConfessions};

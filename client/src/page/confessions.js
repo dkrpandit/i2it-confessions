@@ -25,72 +25,93 @@ const FilterDropdown = ({ onSelect }) => {
 };
 
 export default function Confessions() {
-    const confessionsPage = [
-        {
-            "id": "1",
-            "name": "Aman",
-            "branch": "IT",
-            "year": "third",
-            "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
-        },
-        {
-            "id": '2',
-            "name": "Aman",
-            "branch": "IT",
-            "year": "third",
-            "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
-        },
-        {
-            "id": '3',
-            "name": "Aman",
-            "branch": "IT",
-            "year": "third",
-            "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
-        },
-        {
-            "id": '4',
-            "name": "Aman",
-            "branch": "IT",
-            "year": "third",
-            "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
-        },
-        {
-            "id": '5',
-            "name": "Aman",
-            "branch": "IT",
-            "year": "third",
-            "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
-        },
-        {
-            "id": '6',
-            "name": "Aman",
-            "branch": "IT",
-            "year": "third",
-            "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
-        },
-        {
-            "id": '7',
-            "name": "Aman",
-            "branch": "IT",
-            "year": "third",
-            "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
-        },
-        {
-            "id": '8',
-            "name": "Aman",
-            "branch": "IT",
-            "year": "third",
-            "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
-        },
-        {
-            "id": '9',
-            "name": "Aman",
-            "branch": "IT",
-            "year": "third",
-            "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
-        },
-    ];
-
+    // const confessionsPage = [
+    //     {
+    //         "id": "1",
+    //         "name": "Aman",
+    //         "branch": "IT",
+    //         "year": "third",
+    //         "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
+    //     },
+    //     {
+    //         "id": '2',
+    //         "name": "Aman",
+    //         "branch": "IT",
+    //         "year": "third",
+    //         "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
+    //     },
+    //     {
+    //         "id": '3',
+    //         "name": "Aman",
+    //         "branch": "IT",
+    //         "year": "third",
+    //         "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
+    //     },
+    //     {
+    //         "id": '4',
+    //         "name": "Aman",
+    //         "branch": "IT",
+    //         "year": "third",
+    //         "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
+    //     },
+    //     {
+    //         "id": '5',
+    //         "name": "Aman",
+    //         "branch": "IT",
+    //         "year": "third",
+    //         "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
+    //     },
+    //     {
+    //         "id": '6',
+    //         "name": "Aman",
+    //         "branch": "IT",
+    //         "year": "third",
+    //         "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
+    //     },
+    //     {
+    //         "id": '7',
+    //         "name": "Aman",
+    //         "branch": "IT",
+    //         "year": "third",
+    //         "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
+    //     },
+    //     {
+    //         "id": '8',
+    //         "name": "Aman",
+    //         "branch": "IT",
+    //         "year": "third",
+    //         "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
+    //     },
+    //     {
+    //         "id": '9',
+    //         "name": "Aman",
+    //         "branch": "IT",
+    //         "year": "third",
+    //         "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
+    //     },
+    // ];
+    const [confessionMessage, setConfessionMessage] = useState([]);
+    const getConfessions = async () => {
+        try {
+            const response = await fetch("/get-confessions", {
+                method: "GET",
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setConfessionMessage(data);
+            } else {
+                console.error(`Failed to fetch data. Status: ${response.status}`);
+            }
+        } catch (error) {
+            console.error(`Error fetching data: ${error}`);
+        }
+    };
+    
+    React.useEffect(() => {
+        getConfessions();
+    }, [])
+    const confessionsPage = confessionMessage || [];
+    // console.log(confessionPage);
     const [open, setOpen] = React.useState(false);
     const [selectedFilter, setSelectedFilter] = useState('');
 
@@ -150,6 +171,8 @@ export default function Confessions() {
                         <h4>{`Branch: ${confession.branch}`}</h4>
                         <h4>{`Year: ${confession.year}`}</h4>
                         <p>{`Message: ${confession.message}`}</p>
+                        <p>{`Date: ${confession.messageSendAt}`}</p>
+                        
                     </div>
                 ))
             }

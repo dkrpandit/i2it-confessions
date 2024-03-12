@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import i2itLogo from "../img/i2itLogo.png";
-
+import { toast } from 'react-toastify';
 export default function Login() {
   const navigate = useNavigate();
 
@@ -11,7 +11,8 @@ export default function Login() {
   });
 
   const handleInput = (e) => {
-    const { name, value } = e.target;
+    let name = e.target.name;
+    let value = e.target.value;
     setUserData({ ...userData, [name]: value });
   };
 
@@ -19,27 +20,26 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const res = await fetch("/login", {
+      const response = await fetch("/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(userData),
-      });
+        body: JSON.stringify(userData)
+      })
 
-      const data = await res.json();
-
-      if (res.status === 200) {
-        window.alert("Login successful");
-        // Optionally, you can store the token in local storage or cookies
-        // localStorage.setItem("token", data.token);
+      const res_data = await response.json();
+      console.log(res_data);
+      if (response.ok) {
+        // storeTokenLocalStorage(res_data.token);
         navigate("/confessions");
+        toast.success(res_data.message);
       } else {
-        window.alert(data.error || "Login failed");
+        toast.error(res_data.message)
       }
+
     } catch (error) {
-      console.error("Error during login:", error);
-      window.alert("Internal Server Error");
+      console.log("registration error", error);
     }
   };
 

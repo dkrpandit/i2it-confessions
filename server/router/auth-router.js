@@ -16,8 +16,10 @@ const controller = require("../controllers/auth-controller");
 router.route("/register").post(controller.register);
 router.route("/verify-otp").post(controller.verifyOtp);
 router.route("/send-otp").post(controller.sendOtp);
+router.route("/login").post(controller.login);
 
 router.route("/confession-message").post(controller.confessionMessage);
+router.route("/get-confessions").get(controller.getConfessions);
 
 
 
