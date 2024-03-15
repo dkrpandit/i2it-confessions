@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import i2itLogo from "../img/i2itLogo.png";
 import { toast } from 'react-toastify';
+import { useAuth } from '../store/auth';
 export default function Login() {
   const navigate = useNavigate();
-
+  const { storeTokenLocalStorage } = useAuth();
   const [userData, setUserData] = useState({
     email: "",
     password: ""
@@ -31,7 +32,7 @@ export default function Login() {
       const res_data = await response.json();
       console.log(res_data);
       if (response.ok) {
-        // storeTokenLocalStorage(res_data.token);
+        storeTokenLocalStorage(res_data.token);
         navigate("/confessions");
         toast.success(res_data.message);
       } else {

@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import i2itLogo from "../img/i2itLogo.png"
-
+import { useAuth } from '../store/auth';
 export default function Signup() {
-
+  const { storeTokenLocalStorage } = useAuth();
   const navigate = useNavigate();
   const [userData, setUserData] = useState({
     name: "",
@@ -41,8 +41,9 @@ export default function Signup() {
         },
         body: JSON.stringify({ name, email, password, isOtpVerify }),
       });
-
+      const res_data = await response.json();
       if (response.ok) {
+        storeTokenLocalStorage(res_data.token);
         toast.success("Successfully registered ");
         navigate("/confessions");
       }

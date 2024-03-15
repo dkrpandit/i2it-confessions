@@ -106,7 +106,7 @@ export default function Confessions() {
             console.error(`Error fetching data: ${error}`);
         }
     };
-    
+
     React.useEffect(() => {
         getConfessions();
     }, [])
@@ -165,17 +165,17 @@ export default function Confessions() {
             </div>
 
             {
-                confessionsPage.map(confession => (
+                confessionsPage.length > 0 && confessionsPage.map(confession => (
                     <div className='card' key={confession.id}>
                         <h3>{`Name: ${confession.name}`}</h3>
                         <h4>{`Branch: ${confession.branch}`}</h4>
                         <h4>{`Year: ${confession.year}`}</h4>
                         <p>{`Message: ${confession.message}`}</p>
                         <p>{`Date: ${confession.messageSendAt}`}</p>
-                        
                     </div>
                 ))
             }
+
         </div >
     </>
     );

@@ -31,7 +31,7 @@ const register = async (req, res) => {
 const confessionMessage = async (req, res) => {
     try {
         const data = req.body;
-        console.log(data);
+        // console.log(data);
         const confessionMessage = await confession.create({
             name: data.name,
             branch: data.branch,

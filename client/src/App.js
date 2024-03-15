@@ -1,34 +1,34 @@
 import './App.css';
-import Navbar from './components/Navbar';
+
 import Login from './page/loginPage';
 import Signup from './page/signupPage';
 import Confessions from './page/confessions';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Login></Login>,
-  },
-  {
-    path: "/signup",
-    element: <Signup></Signup>,
-  },
-  {
-    path: "/confessions",
-    element: <Confessions/>,
-  },
-]);
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { Logout } from './page/Logout';
+import { Error } from './page/Error';
+import { useAuth } from './store/auth';
 
 function App() {
+  const { isUserHaveToken } = useAuth();
+  console.log(isUserHaveToken);
   return (
-    <div className="App">
-      <RouterProvider router={router} />
-      {/* <Confessions></Confessions> */}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {/* <Route path="/" element={<Login />} /> */}
+        <Route path="/signup" element={<Signup />} />
+
+        <Route
+          path="/"
+          element={isUserHaveToken ? <Navigate to="/confessions" /> : <Login />}
+        />
+        <Route
+          path="/confessions"
+          element={isUserHaveToken ? <Confessions /> : <Navigate to="/" />}
+        />
+        <Route path="/logout" element={<Logout />} />
+        <Route path="*" element={<Error />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
