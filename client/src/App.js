@@ -8,6 +8,8 @@ import { Logout } from './page/Logout';
 import { Error } from './page/Error';
 import { useAuth } from './store/auth';
 
+import About from './page/About';
+
 function App() {
   const { isUserHaveToken } = useAuth();
   console.log(isUserHaveToken);
@@ -26,6 +28,7 @@ function App() {
           element={isUserHaveToken ? <Confessions /> : <Navigate to="/" />}
         />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/about" element={<About />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>

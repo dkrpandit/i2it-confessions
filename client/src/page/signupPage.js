@@ -155,7 +155,7 @@ export default function Signup() {
                 }}
                 onClick={handleVerifyEmailButton}
               >
-                Verify Email
+                {isOtpVerify ? 'Email Verified' : 'Verify Email'}
               </button>
 
             </div>
