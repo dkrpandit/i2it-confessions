@@ -12,11 +12,9 @@ import About from './page/About';
 
 function App() {
   const { isUserHaveToken } = useAuth();
-  console.log(isUserHaveToken);
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/" element={<Login />} /> */}
         <Route path="/signup" element={<Signup />} />
 
         <Route
