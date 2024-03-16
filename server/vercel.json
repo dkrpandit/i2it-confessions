@@ -1,12 +1,18 @@
 {
     "version": 2,
-    "build": [
-        {"src":"*.js", "use":"@vercel/node"}
-    ],
-    "routes":[
+    "builds": [
         {
-            "src":"/(.*)",
-            "dest":"/"
+            "src": "*.js",
+            "use": "@vercel/node"
         }
+    ],
+    "routes": [
+        { "handle": "filesystem" },
+        { "src": "/register", "dest": "/auth/register" },
+        { "src": "/verify-otp", "dest": "/auth/verify-otp" },
+        { "src": "/send-otp", "dest": "/auth/send-otp" },
+        { "src": "/login", "dest": "/auth/login" },
+        { "src": "/confession-message", "dest": "/auth/confession-message" },
+        { "src": "/get-confessions", "dest": "/auth/get-confessions" }
     ]
 }
