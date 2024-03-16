@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { X } from 'lucide-react';
 import { toast } from 'react-toastify';
+
 const branches = ['IT', 'CS', 'E&TC'];
 const years = ['First', 'Second', 'Third', 'Fourth'];
 
 const PostForm = ({ onClose }) => {
   const formRef = useRef();
-
 
   const [formData, setFormData] = useState({
     name: '',
@@ -14,6 +14,8 @@ const PostForm = ({ onClose }) => {
     year: years[0],
     confession: '',
   });
+
+  const [confirmPost, setConfirmPost] = useState(false); // State for confirmation
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,7 +26,12 @@ const PostForm = ({ onClose }) => {
     e.preventDefault();
     console.log(formData);
 
-    e.preventDefault();
+    if (!confirmPost) {
+      // If not confirmed, set confirmation state to true and return
+      setConfirmPost(true);
+      return;
+    }
+
     const { name, branch, year, confession } = formData;
 
     try {
@@ -133,7 +140,7 @@ const PostForm = ({ onClose }) => {
             type='submit'
             className='bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800'
           >
-            Post
+            {confirmPost ? 'Confirm Post' : 'Post'}
           </button>
         </form>
       </div>

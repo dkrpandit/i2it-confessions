@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import { Filter } from 'lucide-react';
 import PostFrom from './post';
-
+import './confessions.css';
 
 const FilterDropdown = ({ onSelect }) => {
     const options = ['Latest', 'Oldest', '1st Year', '2nd Year', '3rd Year', '4th Year'];
@@ -25,71 +25,7 @@ const FilterDropdown = ({ onSelect }) => {
 };
 
 export default function Confessions() {
-    // const confessionsPage = [
-    //     {
-    //         "id": "1",
-    //         "name": "Aman",
-    //         "branch": "IT",
-    //         "year": "third",
-    //         "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
-    //     },
-    //     {
-    //         "id": '2',
-    //         "name": "Aman",
-    //         "branch": "IT",
-    //         "year": "third",
-    //         "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
-    //     },
-    //     {
-    //         "id": '3',
-    //         "name": "Aman",
-    //         "branch": "IT",
-    //         "year": "third",
-    //         "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
-    //     },
-    //     {
-    //         "id": '4',
-    //         "name": "Aman",
-    //         "branch": "IT",
-    //         "year": "third",
-    //         "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
-    //     },
-    //     {
-    //         "id": '5',
-    //         "name": "Aman",
-    //         "branch": "IT",
-    //         "year": "third",
-    //         "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
-    //     },
-    //     {
-    //         "id": '6',
-    //         "name": "Aman",
-    //         "branch": "IT",
-    //         "year": "third",
-    //         "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
-    //     },
-    //     {
-    //         "id": '7',
-    //         "name": "Aman",
-    //         "branch": "IT",
-    //         "year": "third",
-    //         "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
-    //     },
-    //     {
-    //         "id": '8',
-    //         "name": "Aman",
-    //         "branch": "IT",
-    //         "year": "third",
-    //         "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
-    //     },
-    //     {
-    //         "id": '9',
-    //         "name": "Aman",
-    //         "branch": "IT",
-    //         "year": "third",
-    //         "message": "Hey, I've been meaning to share something with you. I've been feeling a bit like a clueless dummy, but the truth is, I've developed some feelings for you. It's like my heart has a mind of its own, and it keeps pointing in your direction. I hope this confession doesn't make things awkward, but I couldn't keep it to myself any longer. Just wanted you to know what's been on my mind."
-    //     },
-    // ];
+
     const [confessionMessage, setConfessionMessage] = useState([]);
     const getConfessions = async () => {
         try {
@@ -111,10 +47,9 @@ export default function Confessions() {
         getConfessions();
     }, [])
     const confessionsPage = confessionMessage || [];
-    // console.log(confessionPage);
     const [open, setOpen] = React.useState(false);
     const [selectedFilter, setSelectedFilter] = useState('');
-
+    const [searchQuery, setSearchQuery] = useState('');
 
     const handleOpen = () => {
         setOpen(true);
@@ -122,9 +57,31 @@ export default function Confessions() {
     const handleFilterSelect = (option) => {
         setSelectedFilter(option);
         setOpen(false);
-        // Implement your filter logic here
     };
-    const [showPage, setShowPage] = useState(false)
+
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
+    const filterConfessions = (confessions) => {
+        switch (selectedFilter) {
+            case 'Latest':
+                return confessions.slice().sort((a, b) => new Date(b.messageSendAt) - new Date(a.messageSendAt));
+            case 'Oldest':
+                return confessions.slice().sort((a, b) => new Date(a.messageSendAt) - new Date(b.messageSendAt));
+            case '1st Year':
+                return confessions.filter(confession => confession.year === 'First');
+            case '2nd Year':
+                return confessions.filter(confession => confession.year === '2nd');
+            case '3rd Year':
+                return confessions.filter(confession => confession.year === 'Third');
+            case '4th Year':
+                return confessions.filter(confession => confession.year === 'Fourth');
+            default:
+                return confessions;
+        }
+    };
+    // console.log(selectedFilter);
+    const [showPage, setShowPage] = useState(false);
     return (<>
         <Navbar />
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -136,45 +93,57 @@ export default function Confessions() {
                     placeholder='Search confession by name'
                     autoComplete="email"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 max-w-60 "
+                    value={searchQuery}
+                    onChange={handleSearch}
+                    className="SearchConfessions"
+                    style={{ borderRadius: "11px" }}
                 />
 
                 <button type='button' onClick={() => setShowPage(true)} style={
                     {
-                        backgroundColor: "transparent",
-                        color: "gray",
-                        padding: "10px 20px",
-                        cursor: "pointer",
-                        borderRadius: "19px",
-                        boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px",
-                        border: "2px solid #282626",
-                        outline: "none"
+                        backgroundColor: 'transparent',
+                        color: 'gray',
+                        padding: '10px 20px',
+                        cursor: 'pointer',
+                        borderRadius: '19px',
+                        boxShadow: 'rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px',
+                        border: '2px solid rgb(189, 180, 180)',
+                        outline: 'none',
+                        fontWeight: '500',
                     }
-                } >Post your confession</button>
+                }
+                    className='postYourConfession' >Post your confession</button>
                 {showPage && <PostFrom onClose={() => setShowPage(false)} />}
             </div>
 
-            <div className="flex items-center justify-between">
-                <div className="box-content">{selectedFilter}</div>
-                <div className="ml-auto cursor-pointer" onClick={handleOpen}>
-                    <Filter strokeWidth={1.75} />
+
+
+            <div className="confessionsMessages">
+
+
+                <div className="flex items-center justify-between">
+                    <div className="box-content">{selectedFilter}</div>
+                    <div className="ml-auto cursor-pointer" onClick={handleOpen}>
+                        <Filter strokeWidth={1.75} />
+                    </div>
+
+                    {/* Filter dropdown */}
+                    {open && <FilterDropdown onSelect={handleFilterSelect} />}
                 </div>
 
-                {/* Filter dropdown */}
-                {open && <FilterDropdown onSelect={handleFilterSelect} />}
+                {
+                    filterConfessions(confessionsPage)
+                        .filter(confession => confession.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                        .map(confession => (
+                            <div className='card' key={confession.id}>
+                                <h3>{` ${confession.name}`}</h3>
+                                <h4>{`${confession.branch} ${confession.year} year `}</h4>
+                                <p>{`${confession.message}`}</p><br />
+                                <p>{`Date: ${new Date(confession.messageSendAt).toLocaleString('en-IN')}`}</p>
+                            </div>
+                        ))
+                }
             </div>
-
-            {
-                confessionsPage.length > 0 && confessionsPage.map(confession => (
-                    <div className='card' key={confession.id}>
-                        <h3>{`Name: ${confession.name}`}</h3>
-                        <h4>{`Branch: ${confession.branch}`}</h4>
-                        <h4>{`Year: ${confession.year}`}</h4>
-                        <p>{`Message: ${confession.message}`}</p>
-                        <p>{`Date: ${confession.messageSendAt}`}</p>
-                    </div>
-                ))
-            }
 
         </div >
     </>

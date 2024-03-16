@@ -1,0 +1,19 @@
+@media (max-width: 780px) {
+    .postYourConfession {
+        position: absolute;
+        width: 79%;
+    }
+
+    .SearchConfessions {
+        position: absolute;
+        margin-top: 65px;
+        margin-right: auto;
+        width: 78%;
+
+    }
+
+    .confessionsMessages {
+        margin-top: 110px;
+    }
+
+}

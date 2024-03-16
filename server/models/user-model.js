@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     isVerified: {
         type: Boolean,
         default: false
-    },  // default  is false
+    },
 })
 
 /**
@@ -56,7 +56,7 @@ userSchema.methods.generateToken = async function () {
         },
             process.env.JWT_SECRETE_KEY,
             {
-                expiresIn: "5d"
+                expiresIn: "30d"
             }
         )
     } catch (error) {
