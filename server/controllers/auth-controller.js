@@ -6,12 +6,12 @@ const register = async (req, res) => {
     try {
         const data = req.body;
         const isUserExist = await user.findOne({ email: data.email });
-        console.log(data);
+        // console.log(data);
         if (isUserExist) {
             res.status(400).json({ message: "email is already exist" });
         } else {
             const createUser = await user.create({
-                name: data.name,
+                username: data.username,
                 email: data.email,
                 password: data.password,
                 isVerified: data.isOtpVerify
@@ -41,7 +41,6 @@ const confessionMessage = async (req, res) => {
 
         res.status(201).json({
             message: "Successfully posted your confession",
-            // confession: confessionMessage  // Optionally include the created confession in the response
         });
     } catch (error) {
         console.log("Error during registration:", error);

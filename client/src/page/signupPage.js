@@ -7,7 +7,7 @@ export default function Signup() {
   const { storeTokenLocalStorage } = useAuth();
   const navigate = useNavigate();
   const [userData, setUserData] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: ""
@@ -21,7 +21,7 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, email, password, confirmPassword } = userData;
+    const { username, email, password, confirmPassword } = userData;
 
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
@@ -39,7 +39,7 @@ export default function Signup() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password, isOtpVerify }),
+        body: JSON.stringify({ username, email, password, isOtpVerify }),
       });
       const res_data = await response.json();
       if (response.ok) {
@@ -112,15 +112,15 @@ export default function Signup() {
           <form className="space-y-6" method="POST" >
             <div >
               <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900 flex items-center justify-between">
-                Full Name
+                Username
               </label>
               <div className="mt-2">
                 <input
-                  id="name"
-                  name="name"
+                  id="username"
+                  name="username"
                   type="text"
                   autoComplete="email"
-                  value={userData.name}
+                  value={userData.username}
                   onChange={handleInput}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -149,9 +149,9 @@ export default function Signup() {
                 style={{
                   marginLeft: "73%",
                   color: "green",
-                  marginTop: "0.5rem", // Add a small margin to align with other elements
-                  padding: "0.25rem 0.5rem", // Adjust padding for consistency
-                  borderRadius: "0.25rem", // Add border-radius for consistency
+                  marginTop: "0.5rem", 
+                  padding: "0.25rem 0.5rem", 
+                  borderRadius: "0.25rem",
                 }}
                 onClick={handleVerifyEmailButton}
               >
