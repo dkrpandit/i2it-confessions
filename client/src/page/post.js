@@ -47,6 +47,9 @@ const PostForm = ({ onClose }) => {
       if (response.ok) {
         toast.success(res_data.message);
       }
+      else {
+        toast.error(res_data.extraDetails ? res_data.extraDetails : res_data.message);
+      }
     } catch (error) {
       console.log("registration error", error);
     }

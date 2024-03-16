@@ -83,7 +83,6 @@ export default function Signup() {
         toast.success("Successfully registered ");
         navigate("/confessions");
       } else {
-        console.log(res_data.extraDetails);
         toast.error(res_data.extraDetails ? res_data.extraDetails : res_data.message);
       }
     } catch (error) {
