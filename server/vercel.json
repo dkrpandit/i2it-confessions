@@ -1,18 +1,16 @@
 {
     "version": 2,
     "builds": [
-        {
-            "src": "*.js",
-            "use": "@vercel/node"
-        }
+      {
+        "src": "./index.js",
+        "use": "@vercel/node"
+      }
     ],
     "routes": [
-        { "handle": "filesystem" },
-        { "src": "/api/register", "dest": "/api/auth/register" },
-        { "src": "/api/verify-otp", "dest": "/api/auth/verify-otp" },
-        { "src": "/api/send-otp", "dest": "/api/auth/send-otp" },
-        { "src": "/api/login", "dest": "/api/auth/login" },
-        { "src": "/api/confession-message", "dest": "/api/auth/confession-message" },
-        { "src": "/api/get-confessions", "dest": "/api/auth/get-confessions" }
-    ]
-}
+      {
+        "src": "/(.*)",
+        "dest": "/"
+      }
+    ],
+    "rewrites": [{ "source": "/api/(.*)", "destination": "/api" }]
+  }
