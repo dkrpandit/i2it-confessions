@@ -2,7 +2,7 @@
   "name": "i2it",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://i2it-confessions.vercel.app",
+  "proxy": "https://i2it-confessions-2npd8ia7l-dkrpandits-projects.vercel.app",
   "dependencies": {
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
