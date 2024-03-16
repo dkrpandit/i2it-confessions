@@ -8,11 +8,11 @@
     ],
     "routes": [
         { "handle": "filesystem" },
-        { "src": "/register", "dest": "/auth/register" },
-        { "src": "/verify-otp", "dest": "/auth/verify-otp" },
-        { "src": "/send-otp", "dest": "/auth/send-otp" },
-        { "src": "/login", "dest": "/auth/login" },
-        { "src": "/confession-message", "dest": "/auth/confession-message" },
-        { "src": "/get-confessions", "dest": "/auth/get-confessions" }
+        { "src": "/api/register", "dest": "/api/auth/register" },
+        { "src": "/api/verify-otp", "dest": "/api/auth/verify-otp" },
+        { "src": "/api/send-otp", "dest": "/api/auth/send-otp" },
+        { "src": "/api/login", "dest": "/api/auth/login" },
+        { "src": "/api/confession-message", "dest": "/api/auth/confession-message" },
+        { "src": "/api/get-confessions", "dest": "/api/auth/get-confessions" }
     ]
 }
