@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5000;
 
 // handling cors polices
 const corsOptions = {
-    origin: "https://i2it-confessions-6dhi.vercel.app",
+    origin: "https://i2it-confessions-client.onrender.com",
     methods: "GET,POST,DELETE,PUT,PATCH,HEAD",
     Credential: true
 }
