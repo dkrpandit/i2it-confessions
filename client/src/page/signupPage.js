@@ -15,10 +15,46 @@ export default function Signup() {
   const handleInput = (e) => {
     let name = e.target.name;
     let value = e.target.value;
-    // console.log(e);
     setUserData({ ...userData, [name]: value });
   };
+  const [isValidEmail, setIsValidEmail] = useState(false);
+  const [isOtpVerify, setIsOtpVerify] = useState(false);
+  const [serverOtp, setServerOtp] = useState("");
 
+  const [OtpInput, setOtpInput] = useState("");
+  const verifyOtp = () => {
+    if (OtpInput === serverOtp) {
+      setIsOtpVerify(true);
+      toast.success("OTP verified");
+    } else {
+      toast.error("Invalid OTP");
+    }
+  }
+  const handleVerifyEmailButton = async () => {
+    let inputEmail = userData.email;
+
+    if (inputEmail === "" || !inputEmail.endsWith("@students.isquareit.edu.in")) {
+      toast.error("Please use collage email id");
+    } else {
+      setIsValidEmail(true);
+      toast.success("check your email and enter OTP");
+      const { email } = userData;
+      try {
+        const response = await fetch("/send-otp", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email })
+        });
+        const res_data = await response.json();
+        const sOTP = await res_data.otp;
+        setServerOtp(sOTP);
+      } catch (error) {
+        toast.error("Please try again")
+      }
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { username, email, password, confirmPassword } = userData;
@@ -39,7 +75,7 @@ export default function Signup() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, email, password, isOtpVerify }),
+        body: JSON.stringify({ username, email, password }),
       });
       const res_data = await response.json();
       if (response.ok) {
@@ -55,48 +91,6 @@ export default function Signup() {
     }
   };
 
-
-  const [isValidEmail, setIsValidEmail] = useState(false);
-  const [isOtpVerify, setIsOtpVerify] = useState(false);
-  const [serverOtp, setServerOtp] = useState("");
-
-  const handleVerifyEmailButton = async () => {
-    let inputEmail = userData.email;
-
-    if (inputEmail === "" || !inputEmail.endsWith("@students.isquareit.edu.in")) {
-      toast.error("Please use collage email id");
-    } else {
-      setIsValidEmail(true);
-      toast.success("check your email and enter OTP");
-      const { email } = userData;
-      try {
-        const response = await fetch("/send-otp", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ email })
-        });
-        const res_data = await response.json();
-        console.log(res_data);
-        const sOTP = await res_data.otp;
-        setServerOtp(sOTP);
-      } catch (error) {
-        toast.error("Please try again")
-      }
-    }
-  };
-
-  const [OtpInput, setOtpInput] = useState("");
-  const verifyOtp = () => {
-    // console.log(OtpInput);
-    if (OtpInput === serverOtp) {
-      setIsOtpVerify(true);
-      toast.success("OTP verified");
-    } else {
-      toast.error("Invalid OTP");
-    }
-  }
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -158,7 +152,7 @@ export default function Signup() {
                 }}
                 onClick={handleVerifyEmailButton}
               >
-                {isOtpVerify ? 'Email Verified' : 'Verify Email'}
+                {isOtpVerify ? 'Verified' : 'Verify Email'}
               </button>
 
             </div>

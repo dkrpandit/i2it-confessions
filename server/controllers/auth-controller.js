@@ -5,7 +5,6 @@ const nodemailer = require('nodemailer');
 const register = async (req, res) => {
     try {
         const data = req.body;
-
         // Check for both email and username uniqueness in a single query
         const existingUser = await user.findOne({
             $or: [{ email: data.email }, { username: data.username }]
@@ -22,7 +21,6 @@ const register = async (req, res) => {
                 username: data.username,
                 email: data.email,
                 password: data.password,
-                isVerified: data.isOtpVerify
             });
 
             res.status(201).json({
@@ -128,23 +126,31 @@ const sendOtp = async (req, res) => {
 const login = async (req, res) => {
     try {
         const data = req.body;
-        const userExist = await user.findOne({ email: data.email });
+        const userExist = await user.findOne({
+            $or: [
+                { email: data.usernameOrEmail },
+                { username: data.usernameOrEmail }
+            ]
+        });
+       
         if (!userExist) {
-            return res.status(400).json({ message: "invalid credential" });
+            return res.status(400).json({ message: "Invalid credentials" });
         }
+        
         const isPasswordValid = await userExist.comparePassword(data.password);
 
         if (isPasswordValid) {
             res.status(200).json({
-                message: "login successful",
+                message: "Login successful",
                 token: await userExist.generateToken(),
                 userID: userExist._id.toString()
             });
         } else {
-            res.status(400).json({ message: "invalid credential" })
+            res.status(400).json({ message: "Invalid credentials" });
         }
     } catch (error) {
         next(error);
     }
 }
+
 module.exports = { register, verifyOtp, sendOtp, confessionMessage,login ,getConfessions};

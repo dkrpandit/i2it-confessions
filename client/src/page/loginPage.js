@@ -26,7 +26,10 @@ export default function Login() {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(userData)
+        body: JSON.stringify({
+          usernameOrEmail: userData.email, 
+          password: userData.password
+        })
       })
 
       const res_data = await response.json();
@@ -62,13 +65,13 @@ export default function Login() {
           <form className="space-y-6" onSubmit={handleLogin}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900 flex items-center justify-between">
-                Email address
+                Email / Username
               </label>
               <div className="mt-2">
                 <input
                   id="email"
                   name="email"
-                  type="email"
+                  type="text"
                   autoComplete="email"
                   required
                   value={userData.email}
