@@ -29,7 +29,7 @@ export default function Confessions() {
     const [confessionMessage, setConfessionMessage] = useState([]);
     const getConfessions = async () => {
         try {
-            const response = await fetch("/get-confessions", {
+            const response = await fetch("https://i2it-confessions-server.onrender.com/get-confessions", {
                 method: "GET",
             });
             if (response.ok) {

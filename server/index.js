@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors")
 const app = express();
 const connection = require("./utils/db");
 const router = require("./router/auth-router");
@@ -10,6 +11,14 @@ app.use(express.json());
 app.use(router);
 app.use(errorMiddleware);
 const PORT = process.env.PORT || 5000;
+
+// handling cors polices
+const corsOptions = {
+    origin: "",
+    methods: "GET,POST,DELETE,PUT,PATCH,HEAD",
+    Credential: true
+}
+app.use(cors(corsOptions))
 
 connection().then(() => {
     app.listen(PORT, () => {

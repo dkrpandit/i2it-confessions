@@ -35,7 +35,7 @@ const PostForm = ({ onClose }) => {
     const { name, branch, year, confession } = formData;
 
     try {
-      const response = await fetch("/confession-Message", {
+      const response = await fetch("https://i2it-confessions-server.onrender.com/confession-Message", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -2,7 +2,6 @@
   "name": "i2it",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://i2it-confessions-server.onrender.com",
   "dependencies": {
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",

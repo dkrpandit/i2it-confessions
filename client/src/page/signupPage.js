@@ -40,7 +40,7 @@ export default function Signup() {
       toast.success("check your email and enter OTP");
       const { email } = userData;
       try {
-        const response = await fetch("/send-otp", {
+        const response = await fetch("https://i2it-confessions-server.onrender.com/send-otp", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -70,7 +70,7 @@ export default function Signup() {
     }
 
     try {
-      const response = await fetch("/register", {
+      const response = await fetch("https://i2it-confessions-server.onrender.com/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
