@@ -41,7 +41,6 @@ const register = async (req, res) => {
 const confessionMessage = async (req, res) => {
     try {
         const data = req.body;
-        // console.log(data);
         const confessionMessage = await confession.create({
             name: data.name,
             branch: data.branch,
@@ -61,7 +60,6 @@ const confessionMessage = async (req, res) => {
 const getConfessions = async (req, res) => {
     try {
         const response = await confession.find();
-        console.log(response);
         if (!response) {
             return res.status(404).json({ message: "errors to load confessions" })
         }
@@ -74,7 +72,7 @@ const getConfessions = async (req, res) => {
 const verifyOtp = async (req, res) => {
     try {
         const data = req.body;
-        console.log(data);
+        
         res.status(201).json({ message: data });
     } catch (error) {
         res.status(500).json({ message: "errors in verify otp" });
@@ -84,7 +82,6 @@ const verifyOtp = async (req, res) => {
 const sendOtp = async (req, res) => {
     try {
         const data = req.body;
-        // console.log(data);
         const generateOTP = () => {
             const digits = '0123456789';
             let otp = '';
@@ -132,12 +129,9 @@ const login = async (req, res) => {
     try {
         const data = req.body;
         const userExist = await user.findOne({ email: data.email });
-        // console.log(!userExist);
-
         if (!userExist) {
             return res.status(400).json({ message: "invalid credential" });
         }
-        // const isPasswordValid = await bcrypt.compare(data.password, userExist.password);
         const isPasswordValid = await userExist.comparePassword(data.password);
 
         if (isPasswordValid) {
@@ -150,8 +144,7 @@ const login = async (req, res) => {
             res.status(400).json({ message: "invalid credential" })
         }
     } catch (error) {
-        res.status(400).json({ message: "page not found" });
-        // next(error);
+        next(error);
     }
 }
 module.exports = { register, verifyOtp, sendOtp, confessionMessage,login ,getConfessions};
