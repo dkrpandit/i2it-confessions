@@ -5,10 +5,18 @@ const nodemailer = require('nodemailer');
 const register = async (req, res) => {
     try {
         const data = req.body;
-        const isUserExist = await user.findOne({ email: data.email });
-        // console.log(data);
-        if (isUserExist) {
-            res.status(400).json({ message: "email is already exist" });
+
+        // Check for both email and username uniqueness in a single query
+        const existingUser = await user.findOne({
+            $or: [{ email: data.email }, { username: data.username }]
+        });
+
+        if (existingUser) {
+            const isEmailConflict = existingUser.email === data.email;
+            const message = isEmailConflict
+                ? "Email is already in use"
+                : "Username is already taken";
+            res.status(400).json({ message });
         } else {
             const createUser = await user.create({
                 username: data.username,
@@ -16,6 +24,7 @@ const register = async (req, res) => {
                 password: data.password,
                 isVerified: data.isOtpVerify
             });
+
             res.status(201).json({
                 msg: "Registration successful",
                 token: await createUser.generateToken(),
@@ -27,6 +36,7 @@ const register = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
 
 const confessionMessage = async (req, res) => {
     try {

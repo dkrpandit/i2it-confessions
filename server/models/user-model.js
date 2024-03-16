@@ -60,7 +60,7 @@ userSchema.methods.generateToken = async function () {
             }
         )
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 

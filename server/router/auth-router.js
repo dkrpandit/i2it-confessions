@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 // const  {home,login} = require("../controllers/auth-controller");
 const controller = require("../controllers/auth-controller");
-
+const sighupSchema = require("../validator/auth-validator");
+const validator = require("../middleware/validate-middleware");
 // router.get("/", (req, res) => {
 //     res.status(200).send("root page router side")
 // })
@@ -13,7 +14,7 @@ const controller = require("../controllers/auth-controller");
 // })
 
 
-router.route("/register").post(controller.register);
+router.route("/register").post(validator(sighupSchema),controller.register);
 router.route("/verify-otp").post(controller.verifyOtp);
 router.route("/send-otp").post(controller.sendOtp);
 router.route("/login").post(controller.login);

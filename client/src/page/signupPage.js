@@ -46,6 +46,9 @@ export default function Signup() {
         storeTokenLocalStorage(res_data.token);
         toast.success("Successfully registered ");
         navigate("/confessions");
+      } else {
+        console.log(res_data.extraDetails);
+        toast.error(res_data.extraDetails ? res_data.extraDetails : res_data.message);
       }
     } catch (error) {
       console.log("registration error", error);
@@ -149,8 +152,8 @@ export default function Signup() {
                 style={{
                   marginLeft: "73%",
                   color: "green",
-                  marginTop: "0.5rem", 
-                  padding: "0.25rem 0.5rem", 
+                  marginTop: "0.5rem",
+                  padding: "0.25rem 0.5rem",
                   borderRadius: "0.25rem",
                 }}
                 onClick={handleVerifyEmailButton}
