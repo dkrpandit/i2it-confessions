@@ -9,7 +9,7 @@ const errorMiddleware = require("./middleware/error-middleware");
 
 // handling cors polices
 const corsOptions = {
-    origin: "https://i2it-confessions-qhuy-brkbu5nkf-dkrpandits-projects.vercel.app",
+    origin: "https://earnest-gaufre-573098.netlify.app",
     methods: "GET,POST,DELETE,PUT,PATCH,HEAD",
     credentials: true
 };
