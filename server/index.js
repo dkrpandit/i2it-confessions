@@ -9,7 +9,7 @@ const errorMiddleware = require("./middleware/error-middleware");
 
 // handling cors polices
 const corsOptions = {
-    origin: "https://i2it-confessions-6dhi.vercel.app",
+    origin: "",
     methods: "GET,POST,DELETE,PUT,PATCH,HEAD",
     credentials: true
 };
