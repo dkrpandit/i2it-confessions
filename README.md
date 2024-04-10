@@ -16,7 +16,7 @@ Are you a student at I2IT? 🎓 If so, I have something exciting to share with y
 
 ### Get Started:
 
-🚀 Check out the live site and start sharing your confessions today: [I2IT Confessions]([https://example.com](https://earnest-gaufre-573098.netlify.app/confessions))
+🚀 Check out the live site and start sharing your confessions today: [I2IT Confessions](https://earnest-gaufre-573098.netlify.app/confessions)
 
 ### Contribution Guidelines:
 
