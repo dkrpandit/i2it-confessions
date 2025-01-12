@@ -12,11 +12,9 @@ export const Logout = () => {
                 await logoutUser();
                 navigate("/");
             } catch (error) {
-                console.error("Logout failed:", error);
-                
+                console.error("Logout failed:", error);    
             }
         };
-
         handleLogout();
     }, [logoutUser, navigate]);
     return null;
